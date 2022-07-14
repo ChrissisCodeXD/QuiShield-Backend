@@ -7,7 +7,7 @@ import de.quichris.quishield.exceptions.WrongPassword;
 
 public interface AccountService {
 
-    Account saveAccount(Account account) throws AccountNotFound, AccountDuplicate;
+    Account saveAccount(Account account) throws AccountDuplicate;
 
     Account accountLogin(String email, String Password) throws AccountNotFound, WrongPassword;
 
