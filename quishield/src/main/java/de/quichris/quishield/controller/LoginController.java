@@ -27,7 +27,14 @@ public class LoginController {
     }
 
 
-
+    @GetMapping("/login")
+    public ResponseEntity<Account> login(@RequestBody loginRequestBody lrb) throws AccountNotFound, WrongPassword {
+        String email = lrb.getEmail();
+        String password = lrb.getPassword();
+        
+        Account acc = accountService.accountLogin(email, password);
+        return ResponseEntity.ok(acc);
+    }
 
 
 }
