@@ -2,7 +2,7 @@ package de.quichris.quishield.exceptions;
 
 import java.security.PrivilegedActionException;
 
-public class WrongPassword extends Exception{
+public class WrongPassword extends Exception {
     /**
      * Constructs a new exception with {@code null} as its detail message.
      * The cause is not initialized, and may subsequently be initialized by a
