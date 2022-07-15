@@ -1,9 +1,7 @@
 package de.quichris.quishield.handler;
 
 import de.quichris.quishield.error.ApiError;
-import de.quichris.quishield.exceptions.AccountDuplicate;
-import de.quichris.quishield.exceptions.AccountNotFound;
-import de.quichris.quishield.exceptions.WrongPassword;
+import de.quichris.quishield.exceptions.*;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -30,7 +28,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(AccountNotFound.class)
-    protected ResponseEntity<Object> handleGuildNotFound(
+    protected ResponseEntity<Object> handleAccountNotFound(
             AccountNotFound ex
     ) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
@@ -39,23 +37,41 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(AccountDuplicate.class)
-    protected ResponseEntity<Object> handleMemberNotFound(
+    protected ResponseEntity<Object> handleAccountDuplicate(
             AccountDuplicate ex
     ) {
-        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        ApiError apiError = new ApiError(HttpStatus.CONFLICT);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }
 
     @ExceptionHandler(WrongPassword.class)
-    protected ResponseEntity<Object> handleWaifuNotFound(
+    protected ResponseEntity<Object> handleWrongPassword(
             WrongPassword ex
+    ) {
+        ApiError apiError = new ApiError(HttpStatus.FORBIDDEN);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+
+    @ExceptionHandler(NotAuthorized.class)
+    protected ResponseEntity<Object> handleNotAuthorized(
+            NotAuthorized ex
+    ) {
+        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(PasswordNotFound.class)
+    protected ResponseEntity<Object> handlePasswordNotFound(
+            PasswordNotFound ex
     ) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
         apiError.setMessage(ex.getMessage());
         return buildResponseEntity(apiError);
     }
-
 
 
 }
