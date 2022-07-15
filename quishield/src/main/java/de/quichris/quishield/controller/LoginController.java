@@ -1,15 +1,13 @@
 package de.quichris.quishield.controller;
 
 
-import de.quichris.quishield.body.ChangeAccountPasswordRequestBody;
-import de.quichris.quishield.body.CreateAccountRequestBody;
+import de.quichris.quishield.body.*;
 import de.quichris.quishield.entity.Account;
 import de.quichris.quishield.exceptions.AccountDuplicate;
 import de.quichris.quishield.exceptions.AccountNotFound;
 import de.quichris.quishield.exceptions.WrongPassword;
+import de.quichris.quishield.exceptions.WrongUsername;
 import de.quichris.quishield.service.AccountService;
-import de.quichris.quishield.body.LoginRequestBody;
-import de.quichris.quishield.body.LoginResponseBody;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +45,13 @@ public class LoginController {
     public ResponseEntity<Account> changePassword(@RequestBody ChangeAccountPasswordRequestBody body) throws AccountNotFound, WrongPassword {
         String tok = Jwts.parserBuilder().setSigningKey(accountService.getKey()).build().parseClaimsJws(body.getToken()).getBody().getSubject();
         Account tmp = accountService.updateAccountPassword(body, tok);
+        return ResponseEntity.ok(tmp);
+    }
+
+    @PutMapping("/accounts/username")
+    public ResponseEntity<Account> changeUsername(@RequestBody ChangeAccountUsernameRequestBody body) throws AccountNotFound, WrongUsername {
+        String tok = Jwts.parserBuilder().setSigningKey(accountService.getKey()).build().parseClaimsJws(body.getToken()).getBody().getSubject();
+        Account tmp = accountService.updateAccountUsername(body, tok);
         return ResponseEntity.ok(tmp);
     }
 
