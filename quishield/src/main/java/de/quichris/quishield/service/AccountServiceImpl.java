@@ -1,6 +1,7 @@
 package de.quichris.quishield.service;
 
 import de.quichris.quishield.body.ChangeAccountPasswordRequestBody;
+import de.quichris.quishield.body.ChangeAccountUsernameRequestBody;
 import de.quichris.quishield.body.LoginRequestBody;
 import de.quichris.quishield.entity.Account;
 import de.quichris.quishield.entity.Password;
@@ -84,6 +85,18 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Account updateAccountUsername(ChangeAccountUsernameRequestBody account, String token) throws AccountNotFound, WrongUsername {
+        Account tmp = accountRepo.findByToken(token).orElseThrow(AccountNotFound::new);
+        if (Objects.equals(tmp.getUsername(), account.getOld_username())){
+            tmp.setUsername(account.getUsername());
+            accountRepo.save(tmp);
+            return tmp;
+        } else {
+            throw new WrongUsername("The provided old Username was wrong");
+        }
+    }
+
+    @Override
     public Account updateAccountPassword(ChangeAccountPasswordRequestBody account, String token) throws AccountNotFound, WrongPassword {
         Account tmp = accountRepo.findByToken(token).orElseThrow(AccountNotFound::new);
 
@@ -97,7 +110,6 @@ public class AccountServiceImpl implements AccountService {
             });
             tmp.setToken(tmptoken);
             accountRepo.save(tmp);
-
             return tmp;
         } else {
             throw new WrongPassword("Wrong Password!");

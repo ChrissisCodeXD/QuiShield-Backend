@@ -1,6 +1,7 @@
 package de.quichris.quishield.service;
 
 import de.quichris.quishield.body.ChangeAccountPasswordRequestBody;
+import de.quichris.quishield.body.ChangeAccountUsernameRequestBody;
 import de.quichris.quishield.body.LoginRequestBody;
 import de.quichris.quishield.entity.Account;
 import de.quichris.quishield.entity.Password;
@@ -20,6 +21,8 @@ public interface AccountService {
 
     Account updateAccountPassword(ChangeAccountPasswordRequestBody account, String token) throws AccountNotFound, WrongPassword;
 
+    Account updateAccountUsername(ChangeAccountUsernameRequestBody account, String token) throws AccountNotFound, WrongUsername;
+
     Key getKey();
 
     List<Password> getPasswords(String token) throws AccountNotFound;
@@ -30,4 +33,6 @@ public interface AccountService {
 
 
     Password updatePassword(Password password, String token) throws PasswordNotFound, NotAuthorized;
+
+
 }
