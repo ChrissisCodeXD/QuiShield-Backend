@@ -23,23 +23,23 @@ public class Account {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    @Column
+    @Column(unique = true)
     private String id;
 
 
 
-    @Column
+    @Column(unique = true)
     private String username;
 
     @Column
     private String profilpicture;
 
-    @Column
+    @Column(unique = true)
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Password> passwords = new ArrayList<>();
 
+    @Column(unique = true)
+    private String token;
 
     @Column
     private String password;
