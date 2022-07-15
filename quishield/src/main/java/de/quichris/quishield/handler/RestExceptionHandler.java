@@ -32,7 +32,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             AccountNotFound ex
     ) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
-        apiError.setMessage(ex.getMessage());
+        String message = ex.getMessage();
+        if (message.isEmpty()) {
+            message = "Account not Found!";
+        }
+        apiError.setMessage(message);
         return buildResponseEntity(apiError);
     }
 
@@ -41,7 +45,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             AccountDuplicate ex
     ) {
         ApiError apiError = new ApiError(HttpStatus.CONFLICT);
-        apiError.setMessage(ex.getMessage());
+        String message = ex.getMessage();
+        if (message.isEmpty()) {
+            message = "This Account already exists";
+        }
+        apiError.setMessage(message);
         return buildResponseEntity(apiError);
     }
 
@@ -50,7 +58,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             WrongPassword ex
     ) {
         ApiError apiError = new ApiError(HttpStatus.FORBIDDEN);
-        apiError.setMessage(ex.getMessage());
+        String message = ex.getMessage();
+        if (message.isEmpty()) {
+            message = "Wrong Password or email!";
+        }
+        apiError.setMessage(message);
         return buildResponseEntity(apiError);
     }
 
@@ -60,7 +72,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             NotAuthorized ex
     ) {
         ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED);
-        apiError.setMessage(ex.getMessage());
+        String message = ex.getMessage();
+        if (message.isEmpty()) {
+            message = "UNAUTHORIZED TOKEN";
+        }
+        apiError.setMessage(message);
         return buildResponseEntity(apiError);
     }
 
@@ -69,7 +85,24 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             PasswordNotFound ex
     ) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
-        apiError.setMessage(ex.getMessage());
+        String message = ex.getMessage();
+        if (message.isEmpty()) {
+            message = "The Password was not found!";
+        }
+        apiError.setMessage(message);
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(WrongUsername.class)
+    protected ResponseEntity<Object> handlePasswordNotFound(
+            WrongUsername ex
+    ) {
+        ApiError apiError = new ApiError(HttpStatus.FORBIDDEN);
+        String message = ex.getMessage();
+        if (message.isEmpty()) {
+            message = "Wrong Username!";
+        }
+        apiError.setMessage(message);
         return buildResponseEntity(apiError);
     }
 
