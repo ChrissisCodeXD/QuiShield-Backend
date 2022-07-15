@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class QuishieldApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(QuishieldApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(QuishieldApplication.class, args);
+    }
 
 }
