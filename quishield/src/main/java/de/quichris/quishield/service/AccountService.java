@@ -29,6 +29,5 @@ public interface AccountService {
     Password getPassword(String token, String password_id) throws PasswordNotFound, NotAuthorized;
 
 
-
     Password updatePassword(Password password, String token) throws PasswordNotFound, NotAuthorized;
 }

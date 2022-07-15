@@ -27,7 +27,6 @@ public class Account {
     private String id;
 
 
-
     @Column(unique = true)
     private String username;
 
