@@ -87,7 +87,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account updateAccountUsername(ChangeAccountUsernameRequestBody account, String token) throws AccountNotFound, WrongUsername {
         Account tmp = accountRepo.findByToken(token).orElseThrow(AccountNotFound::new);
-        if (Objects.equals(tmp.getUsername(), account.getOld_username())){
+        if (Objects.equals(tmp.getUsername(), account.getOld_username())) {
             tmp.setUsername(account.getUsername());
             accountRepo.save(tmp);
             return tmp;
