@@ -1,5 +1,6 @@
 package de.quichris.quishield.util;
 
+import com.google.common.hash.Hashing;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -30,5 +31,11 @@ public class Util {
     public String DecryptPassword(String token) {
         SecretKey key = Keys.hmacShaKeyFor(secretString.getBytes(StandardCharsets.UTF_8));
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
+    }
+
+    public String sha256(String password) {
+        return Hashing.sha256()
+                .hashString(password, StandardCharsets.UTF_8)
+                .toString();
     }
 }

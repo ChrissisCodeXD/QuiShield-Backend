@@ -60,6 +60,7 @@ public class AccountServiceImpl implements AccountService {
             Account member1 = accountRepo.findByEmail(account.getEmail()).orElseThrow(AccountNotFound::new);
             throw new AccountDuplicate("Account with the email " + account.getEmail() + " does already exist!");
         } catch (AccountNotFound e) {
+            account.setPassword(utils.sha256(account.getPassword()));
             return accountRepo.save(account);
         }
     }
