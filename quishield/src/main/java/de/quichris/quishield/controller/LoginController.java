@@ -25,13 +25,10 @@ public class LoginController {
     private final AccountService accountService;
 
 
-    @GetMapping("")
-    public ResponseEntity<String> getGuilds() {
-        return ResponseEntity.ok().body("oki doki");
-    }
 
 
-    @GetMapping("/login")
+
+    @PostMapping("/login")
     public ResponseEntity<LoginResponseBody> login(@RequestBody LoginRequestBody lrb) throws AccountNotFound, WrongPassword {
         Account acc = accountService.accountLogin(lrb);
         Date expireDate = new Date(System.currentTimeMillis() + 30 * 60000);
@@ -39,6 +36,8 @@ public class LoginController {
         LoginResponseBody responseBody = new LoginResponseBody(token, acc.getUsername());
         return ResponseEntity.ok(responseBody);
     }
+
+
 
 
     @PutMapping("/accounts/password")

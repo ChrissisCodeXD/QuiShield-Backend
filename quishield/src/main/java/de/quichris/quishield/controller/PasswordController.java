@@ -25,7 +25,7 @@ public class PasswordController {
     private final AccountService accountService;
 
 
-    @GetMapping("/passwords")
+    @PostMapping("/passwords")
     public ResponseEntity<PasswordsResponseBody> getPasswords(@RequestBody PasswordsRequestBody prb) throws NotAuthorized, AccountNotFound {
         try {
             String token = Jwts.parserBuilder().setSigningKey(accountService.getKey()).build().parseClaimsJws(prb.getToken()).getBody().getSubject();
@@ -39,7 +39,7 @@ public class PasswordController {
     }
 
 
-    @PostMapping("/passwords")
+    @PostMapping("/passwords/new")
     public ResponseEntity<Password> getPasswords(@RequestBody PasswordCreateRequestBody prb) throws NotAuthorized {
         try {
             String token = Jwts.parserBuilder().setSigningKey(accountService.getKey()).build().parseClaimsJws(prb.getToken()).getBody().getSubject();
@@ -56,7 +56,7 @@ public class PasswordController {
         }
     }
 
-    @GetMapping("/passwords/{password_id}")
+    @PostMapping("/passwords/{password_id}")
     public ResponseEntity<Password> getDecryptedPassword(@RequestBody GetDecryptedPasswordRequestBody body, @PathVariable String password_id) throws PasswordNotFound, NotAuthorized {
         try {
             String token = Jwts.parserBuilder().setSigningKey(accountService.getKey()).build().parseClaimsJws(body.getToken()).getBody().getSubject();
